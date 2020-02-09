@@ -47,7 +47,7 @@ public class Playlist {
 	public boolean equals(Object obj) {
 		if(obj instanceof Playlist) {
 			Playlist toCompare = (Playlist) obj;
-			return this.name.equals(toCompare.name);
+			return this.name.toLowerCase().equals(toCompare.name.toLowerCase());
 		}
 		return false;
 	}

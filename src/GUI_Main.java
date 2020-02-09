@@ -244,6 +244,7 @@ public class GUI_Main {
 		playlistPanel.add(lblAddToPlaylist, gbc_lblAddToPlaylist);
 		lblAddToPlaylist.setVerticalAlignment(SwingConstants.CENTER);
 		lblAddToPlaylist.setForeground(Color.WHITE);
+		lblAddToPlaylist.setVerticalTextPosition(SwingConstants.TOP);
 		lblAddToPlaylist.setFont(new Font("Cooper Black", Font.PLAIN, 18));
 		lblAddToPlaylist.setVisible(false);
 		lblAddToPlaylist.setBorder(new EmptyBorder(12, 10, 10, 10));
@@ -400,6 +401,20 @@ public class GUI_Main {
 			}
 		});
 
+		resultsTable_1.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				playlistMsg.setVisible(false);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				return;
+			}
+
+		});
+		
 		searchBar_1.addFocusListener(new FocusListener() {
 
 			@Override

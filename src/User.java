@@ -70,7 +70,7 @@ public class User {
 	public boolean equals(Object obj) {
 		if(obj instanceof User) {
 			User toCompare = (User) obj;
-			return this.username.equals(toCompare.username);
+			return this.username.toLowerCase().equals(toCompare.username.toLowerCase());
 		}
 		return false;
 	}
