@@ -2,9 +2,9 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\marsi\Desktop\MusicPlayer\Musicplayer.jar</jar>
-  <outfile>C:\Users\marsi\Desktop\MusicPlayer\Musicplayer.exe</outfile>
-  <errTitle></errTitle>
+  <jar>C:\Users\Mina\Dropbox\CECS 327\Assignments\Assignment 1\MusicPlayer\Musicplayer.jar</jar>
+  <outfile>C:\Users\Mina\Dropbox\CECS 327\Assignments\Assignment 1\MusicPlayer\Musicplayer.exe</outfile>
+  <errTitle>Correct Java version not found</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
   <priority>normal</priority>
@@ -13,7 +13,11 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\marsi\Desktop\MusicPlayer\icons\icon.ico</icon>
+  <icon>C:\Users\Mina\Dropbox\CECS 327\Assignments\Assignment 1\MusicPlayer\icons\icon.ico</icon>
+  <singleInstance>
+    <mutexName>musicPlayer</mutexName>
+    <windowTitle></windowTitle>
+  </singleInstance>
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
