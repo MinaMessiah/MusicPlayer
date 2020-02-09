@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-public class Song implements Runnable 
-{
+public class Song implements Runnable {
 	private SongRelease release;
 	private SongArtist artist;
 	private SongDetails song;
@@ -17,7 +16,9 @@ public class Song implements Runnable
 		this.song = song;
 	}
 
-	
+	public Song() {
+	}
+
 //   ------------- START Songs look up section -------------- 
 	public static ArrayList<Song> lookUpSongBySongName(String songName, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
@@ -36,7 +37,7 @@ public class Song implements Runnable
 
 		return matches;
 	}
-	
+
 	public static ArrayList<Song> lookUpSongByGenre(String genre, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
 		for (Song song : songs)
@@ -45,7 +46,7 @@ public class Song implements Runnable
 
 		return matches;
 	}
-	
+
 	public static Song lookUpSongBySongID(String songID, ArrayList<Song> songs) {
 		for (Song song : songs)
 			if (song.getSongId().toLowerCase().equals(songID.toLowerCase()))
@@ -64,7 +65,6 @@ public class Song implements Runnable
 	}
 //  ------------- END Songs look up section -------------- 
 
-
 //  -------------- START getters section -----------------
 	public String getSongName() {
 		return this.release.name;
@@ -81,7 +81,7 @@ public class Song implements Runnable
 	public String getSongId() {
 		return this.song.id;
 	}
-	
+
 	public String getSongGenre() {
 		return this.artist.terms;
 	}
@@ -104,9 +104,17 @@ public class Song implements Runnable
 		}
 	}
 
+	public static Song getSongById(String songId) {
+		ArrayList<Song> songs = JsonHelperMethods.readSongsJSON();
+		for (Song s : songs) {
+			if (s.getSongId().equals(songId))
+				return s;
+		}
+		return new Song();
+	}
+
 	@Override
-	public void run()
-	{
+	public void run() {
 		try {
 //			InputStream is = new CECS327InputStream(this.getSongId() + ".mp3");
 			InputStream is = new CECS327InputStream("imperial.mp3");
@@ -118,20 +126,14 @@ public class Song implements Runnable
 			exception.printStackTrace();
 		}
 	}
-	
 
-	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
+		if(obj instanceof Song) {
+			Song toCompare = (Song) obj;
+			return this.getSongName().equals(toCompare.getSongName());
 		}
-		if (obj == null || obj.getClass() != this.getClass()) {
-			return false;
-		}
-
-		Song newSong = (Song) obj;
-		return this.getSongId().compareTo(newSong.getSongId()) == 0;
+		return false;
 	}
 
 	@Override
