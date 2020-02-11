@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class JsonHelperMethods {
 
+	/**
+	 * Read's in all songs from the json file and adds them to an array list.
+	 * @return
+	 */
 	static ArrayList<Song> readSongsJSON() {
 		try {
 			Gson gson = new Gson();
@@ -30,6 +34,9 @@ public class JsonHelperMethods {
 		}
 	}
 
+	/*
+	 * Reads in all users from the JSON file and adds them to an array list.
+	 */
 	static ArrayList<User> readUsersJSON() {
 		try {
 			Gson gson = new Gson();
@@ -51,6 +58,9 @@ public class JsonHelperMethods {
 		}
 	}
 
+	/*
+	 * Adds users to the JSON file
+	 */
 	static void writeUsersJSON(ArrayList<User> users) {
 		try (final FileWriter writer = new FileWriter("users.json")) {
 			Gson gson = new GsonBuilder().create();
@@ -60,6 +70,11 @@ public class JsonHelperMethods {
 		}
 	}
 
+	/**
+	 * Removes a user from the user list and rewrites the user JSON file.
+	 * @param deleteMe
+	 * @return
+	 */
 	static boolean deleteAccount(User deleteMe) {
 		ArrayList<User> users = readUsersJSON();
 		for (User tempUser : users) {

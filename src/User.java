@@ -5,11 +5,19 @@ public class User {
 	private String username;
 	private String password;
 
+	/**
+	 * Default user constructor
+	 */
 	public User() {
 		this.username = null;
 		this.password = null;
 	}
 
+	/**
+	 * User constructor that takes in a name and password.
+	 * @param username
+	 * @param password
+	 */
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -37,7 +45,11 @@ public class User {
 	}
 
 //  ------------- END getters section -------------
-
+	
+	/**
+	 * Adds a Playlist to the current user.
+	 * @param playlist
+	 */
 	public void addPlaylist(Playlist playlist) {
 		if (this.playlists == null)
 			this.playlists = new ArrayList<Playlist>();
@@ -54,7 +66,10 @@ public class User {
 		}
 
 	}
-
+	
+	/**
+	 * Updates the user by loading the latest user data into the main user list.
+	 */
 	public void updateUser() {
 		ArrayList<User> users = JsonHelperMethods.readUsersJSON();
 		for (int i = 0; i < users.size(); i++) {

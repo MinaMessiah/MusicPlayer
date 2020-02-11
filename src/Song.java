@@ -10,12 +10,21 @@ public class Song implements Runnable {
 	private SongArtist artist;
 	private SongDetails song;
 
+	/**
+	 * Song constructor requiring a release, artist, and song.
+	 * @param release
+	 * @param artist
+	 * @param song
+	 */
 	public Song(SongRelease release, SongArtist artist, SongDetails song) {
 		this.release = release;
 		this.artist = artist;
 		this.song = song;
 	}
 
+	/**
+	 * Default song constructor
+	 */
 	public Song() {
 	}
 
@@ -138,7 +147,11 @@ public class Song implements Runnable {
 		}
 	}
 	
-	
+	/**
+	 * Returns a song by it's ID.
+	 * @param songId
+	 * @return
+	 */
 	public static Song getSongById(String songId) {
 		ArrayList<Song> songs = JsonHelperMethods.readSongsJSON();
 		for (Song s : songs) {
