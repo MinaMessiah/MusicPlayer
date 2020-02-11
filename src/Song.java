@@ -20,6 +20,12 @@ public class Song implements Runnable {
 	}
 
 //   ------------- START Songs look up section -------------- 
+	/**
+	 * Looks up a song by name and returns it's matches via an array list
+	 * @param songName
+	 * @param songs
+	 * @return
+	 */
 	public static ArrayList<Song> lookUpSongBySongName(String songName, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
 		for (Song song : songs)
@@ -28,7 +34,13 @@ public class Song implements Runnable {
 
 		return matches;
 	}
-
+	
+	/**
+	 * Look up song name by artist's name and returns it's matches via an array list.
+	 * @param artistName
+	 * @param songs
+	 * @return
+	 */
 	public static ArrayList<Song> lookUpSongByArtistName(String artistName, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
 		for (Song song : songs)
@@ -37,7 +49,13 @@ public class Song implements Runnable {
 
 		return matches;
 	}
-
+	
+	/**
+	 * Look up song by genre returns matches via an array list.
+	 * @param genre
+	 * @param songs
+	 * @return
+	 */
 	public static ArrayList<Song> lookUpSongByGenre(String genre, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
 		for (Song song : songs)
@@ -46,7 +64,13 @@ public class Song implements Runnable {
 
 		return matches;
 	}
-
+	
+	/**
+	 * Looks up a song by ID and returns the respective song.
+	 * @param songID
+	 * @param songs
+	 * @return
+	 */
 	public static Song lookUpSongBySongID(String songID, ArrayList<Song> songs) {
 		for (Song song : songs)
 			if (song.getSongId().toLowerCase().equals(songID.toLowerCase()))
@@ -54,7 +78,13 @@ public class Song implements Runnable {
 
 		return null;
 	}
-
+	
+	/**
+	 * Get's similar songs by comparing their similarity. If they are similar it adds them to an array list and returns them.
+	 * @param similarityId
+	 * @param songs
+	 * @return
+	 */
 	public static ArrayList<Song> getSimilarSongs(String similarityId, ArrayList<Song> songs) {
 		ArrayList<Song> matches = new ArrayList<Song>();
 		for (Song song : songs)
@@ -92,6 +122,10 @@ public class Song implements Runnable {
 
 //  ---------------- END getters section -----------------
 
+	/**
+	 * Try's playing a song and if unable to play catches the exception.
+	 * @param songID
+	 */
 	public static void playSong(String songID) {
 		try {
 			InputStream is = new CECS327InputStream(songID);
@@ -103,7 +137,8 @@ public class Song implements Runnable {
 			exception.printStackTrace();
 		}
 	}
-
+	
+	
 	public static Song getSongById(String songId) {
 		ArrayList<Song> songs = JsonHelperMethods.readSongsJSON();
 		for (Song s : songs) {

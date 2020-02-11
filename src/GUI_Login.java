@@ -190,7 +190,7 @@ public class GUI_Login {
 					messageLabel.setForeground(new Color(178, 34, 34));
 					return;
 				} else if (username.length() < 6 && password.length() < 6) {
-					messageLabel.setText("Usernanme and password must be greater than 5.");
+					messageLabel.setText("Usernanme and password must be greater than 5 characters.");
 					messageLabel.setForeground(new Color(178, 34, 34));
 					return;
 				}
