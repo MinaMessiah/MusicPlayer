@@ -210,6 +210,11 @@ public class GUI_Main {
 		btnDeleteAccount.setBorder(new EmptyBorder(10, 10, 10, 10));
 		buttonPanel.add(btnDeleteAccount);
 
+		JButton btnDeletePlaylist = new JButton("Delete Playlist");
+
+		btnDeletePlaylist.setBorder(new EmptyBorder(10, 10, 10, 10));
+		buttonPanel.add(btnDeletePlaylist);
+
 		JPanel infoSubPanel = new JPanel();
 		infoSubPanel.setBackground(Color.DARK_GRAY);
 		infoPanel.add(infoSubPanel, BorderLayout.WEST);
@@ -263,7 +268,7 @@ public class GUI_Main {
 		gbc_playlistCombo.gridx = 1;
 		gbc_playlistCombo.gridy = 0;
 		playlistPanel.add(playlistCombo, gbc_playlistCombo);
-		
+
 		JLabel playlistMsg = new JLabel("Playlist Message");
 		playlistMsg.setVerticalAlignment(SwingConstants.TOP);
 		playlistMsg.setFont(new Font("Cooper Black", Font.PLAIN, 18));
@@ -414,7 +419,7 @@ public class GUI_Main {
 			}
 
 		});
-		
+
 		searchBar_1.addFocusListener(new FocusListener() {
 
 			@Override
@@ -516,13 +521,12 @@ public class GUI_Main {
 
 		playlistCombo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//User selects create new playlist 
+
+				// User selects create new playlist
 				if (playlistCombo.getSelectedIndex() == playLists.size() + 1) {
 					String playlistName = JOptionPane.showInputDialog(null, "Playlist name: ", JOptionPane.OK_OPTION);
 					if (playlistName != null) {
-						if (loggedInUser.getPlaylists().contains(new Playlist(playlistName)))
-						{
+						if (loggedInUser.getPlaylists().contains(new Playlist(playlistName))) {
 							playlistMsg.setText("Playlist Exists");
 							playlistMsg.setForeground(Color.RED);
 							playlistMsg.setVisible(true);
@@ -537,21 +541,18 @@ public class GUI_Main {
 						}
 					}
 				}
-				//User selects a playlist to add a song to
+				// User selects a playlist to add a song to
 				else if (playlistCombo.getSelectedIndex() > 0) {
 					for (Playlist p : playLists) {
 						if (p.getPlaylistName().equals(playlistCombo.getSelectedItem())) {
-							if (p.addSongToPlaylist(lastSelectedSong))
-							{
+							if (p.addSongToPlaylist(lastSelectedSong)) {
 								loggedInUser.updateUser();
 								playlistCombo.setSelectedIndex(0);
 								playlistMsg.setText("Song Added");
 								playlistMsg.setForeground(Color.GREEN);
 								playlistMsg.setVisible(true);
 								break;
-							}
-							else
-							{
+							} else {
 								playlistCombo.setSelectedIndex(0);
 								playlistMsg.setText("Song Already Exists");
 								playlistMsg.setForeground(Color.RED);
@@ -580,6 +581,47 @@ public class GUI_Main {
 
 			}
 		});
+
+//		Start delete playlist action listener area
+
+		btnDeletePlaylist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (searchCombo.getSelectedIndex() > 2) {
+
+					int input = JOptionPane.showConfirmDialog(null,
+							"Are you sure you want to delete selected playlist?", "Select an Option...",
+							JOptionPane.YES_NO_OPTION);
+					if (input == 0) {
+						String playlistNameToBeDeleted = searchCombo.getSelectedItem().toString();
+						ArrayList<Playlist> userPlaylists = loggedInUser.getPlaylists();
+						for (int i = 0; i < userPlaylists.size(); i++) {
+							if (userPlaylists.get(i).getPlaylistName().equals(playlistNameToBeDeleted)) {
+								userPlaylists.remove(i);
+
+//								update search drop down menu 
+								searchCombo.removeItemAt(searchCombo.getSelectedIndex());
+								searchCombo.setSelectedIndex(0);
+//								update the playlist drop down 
+								for (int j = 0; j < playlistCombo.getItemCount(); j++) {
+									if (playlistCombo.getItemAt(j).toString().equals(playlistNameToBeDeleted)) {
+										playlistCombo.setSelectedIndex(0);
+										playlistCombo.removeItemAt(j);
+										break;
+									}
+								}
+
+							}
+						}
+						loggedInUser.updateUser();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Select a playlist from the top dropdown menu!");
+				}
+			}
+		});
+
+// End delete playlist action listener area 
 
 		JLabel lblDrag = new JLabel("");
 		lblDrag.addMouseListener(new MouseAdapter() {
