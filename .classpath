@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/matth/Documents/School/Spring 2020/Networking/gson-2.8.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/matth/Documents/School/Spring 2020/Networking/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mina/Dropbox/CECS 327/Assignments/Assignment 1/MusicPlayer/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mina/Dropbox/CECS 327/Assignments/Assignment 1/MusicPlayer/jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

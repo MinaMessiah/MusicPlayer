@@ -190,7 +190,7 @@ public class GUI_Main {
 		infoPanel.add(buttonPanel, BorderLayout.SOUTH);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton btnPlayPause = new JButton("Play / Stop");
+		JButton btnPlayPause = new JButton("Play");
 		btnPlayPause.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnPlayPause.setEnabled(false);
 		buttonPanel.add(btnPlayPause);
@@ -199,6 +199,11 @@ public class GUI_Main {
 		btnGetSimilarSongs.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnGetSimilarSongs.setEnabled(false);
 		buttonPanel.add(btnGetSimilarSongs);
+		
+		JButton btnDeletePlaylist = new JButton("Delete Playlist");
+		btnDeletePlaylist.setBorder(new EmptyBorder(10, 10, 10, 10));
+		btnDeletePlaylist.setEnabled(false);
+		buttonPanel.add(btnDeletePlaylist);
 
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -209,11 +214,6 @@ public class GUI_Main {
 		JButton btnDeleteAccount = new JButton("Delete Account");
 		btnDeleteAccount.setBorder(new EmptyBorder(10, 10, 10, 10));
 		buttonPanel.add(btnDeleteAccount);
-
-		JButton btnDeletePlaylist = new JButton("Delete Playlist");
-
-		btnDeletePlaylist.setBorder(new EmptyBorder(10, 10, 10, 10));
-		buttonPanel.add(btnDeletePlaylist);
 
 		JPanel infoSubPanel = new JPanel();
 		infoSubPanel.setBackground(Color.DARK_GRAY);
@@ -456,6 +456,7 @@ public class GUI_Main {
 		});
 
 		btnDeleteAccount.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account??",
@@ -464,20 +465,22 @@ public class GUI_Main {
 					if (JsonHelperMethods.deleteAccount(loggedInUser)) {
 						frame.setVisible(false);
 						frame.dispose();
+						player.stop();
 						GUI_Login.main(null);
 					} else
 						JOptionPane.showMessageDialog(null, "Unexpected error!");
-
 				}
 			}
 
 		});
 
 		btnLogout.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
 				frame.dispose();
+				player.stop();
 				GUI_Login.main(null);
 			}
 
@@ -500,13 +503,13 @@ public class GUI_Main {
 					player = new Thread(lastSelectedSong);
 					player.start();
 					playing = true;
+					btnPlayPause.setText("Stop");
 				} else {
 					player.stop();
 					playing = false;
+					btnPlayPause.setText("Play");
 				}
-
 			}
-
 		});
 
 		for (int i = 0; i < searchCombo.getComponentCount(); i++) {
@@ -572,23 +575,24 @@ public class GUI_Main {
 							.getSongs();
 					tableModel.updateTable(results);
 					lblSearch.setText("Search in");
+					btnDeletePlaylist.setEnabled(true);
 				} else {
 					tableModel.updateTable(songs);
 					searchBar_1.setText("");
 					lblSearch.setText("Search by");
 					searchBar_1.setEnabled(true);
+					btnDeletePlaylist.setEnabled(false);
 				}
 
 			}
 		});
 
-//		Start delete playlist action listener area
-
+		// Start delete playlist action listener area
 		btnDeletePlaylist.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (searchCombo.getSelectedIndex() > 2) {
-
+					btnDeletePlaylist.setEnabled(true);
 					int input = JOptionPane.showConfirmDialog(null,
 							"Are you sure you want to delete selected playlist?", "Select an Option...",
 							JOptionPane.YES_NO_OPTION);
@@ -599,10 +603,10 @@ public class GUI_Main {
 							if (userPlaylists.get(i).getPlaylistName().equals(playlistNameToBeDeleted)) {
 								userPlaylists.remove(i);
 
-//								update search drop down menu 
+								// update search drop down menu 
 								searchCombo.removeItemAt(searchCombo.getSelectedIndex());
 								searchCombo.setSelectedIndex(0);
-//								update the playlist drop down 
+								// update the playlist drop down 
 								for (int j = 0; j < playlistCombo.getItemCount(); j++) {
 									if (playlistCombo.getItemAt(j).toString().equals(playlistNameToBeDeleted)) {
 										playlistCombo.setSelectedIndex(0);
@@ -610,13 +614,10 @@ public class GUI_Main {
 										break;
 									}
 								}
-
 							}
 						}
 						loggedInUser.updateUser();
 					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Select a playlist from the top dropdown menu!");
 				}
 			}
 		});
