@@ -1,8 +1,13 @@
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
@@ -20,19 +25,29 @@ public class ClientCM {
         InetAddress ip = InetAddress.getLocalHost(); 
         byte buf[] = null; 
   
-        //Gson gson = new Gson();
-		//JsonReader reader = new JsonReader(new FileReader("getSongChunk.json"));
-		
-		String inp = "this is a message from the client to the server";
+        Gson gson = new Gson();
+        
+        JsonObject json = new JsonObject();
+
+
+        String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
+
+        
+        
+        buf = jsonRequest.getBytes(); 
+        DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
+        ds.send(DpSend); 
+        
+    
 		
         // Convert the String input into the byte array. 
-        buf = inp.getBytes(); 
+        //buf = inp.getBytes(); 
   
         // Step 2: Create the datagramPacket for sending the data. 
-        DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
+        //DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
   
         // Step 3: invoke the send call to actually send the data. 
-        ds.send(DpSend); 
+        //ds.send(DpSend); 
 
     } 
 	
