@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 
 public class ClientCM {
 
-	public static void main(String args[]) throws IOException 
+	public void send(String jsonRequest) throws IOException 
     { 
 		
         // Step 1: Create the socket object for carrying the data. 
@@ -25,15 +25,13 @@ public class ClientCM {
         InetAddress ip = InetAddress.getLocalHost(); 
         byte buf[] = null; 
   
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         
-        JsonObject json = new JsonObject();
+        //JsonObject json = j;
 
+        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
+        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
 
-        String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
-
-        
-        
         buf = jsonRequest.getBytes(); 
         DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
         ds.send(DpSend); 
