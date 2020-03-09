@@ -24,28 +24,14 @@ public class ClientCM {
   
         InetAddress ip = InetAddress.getLocalHost(); 
         byte buf[] = null; 
-  
-        //Gson gson = new Gson();
-        
-        //JsonObject json = j;
 
-        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
-        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
-
+        // Convert the String input into the byte array. 
         buf = jsonRequest.getBytes(); 
         DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
-        ds.send(DpSend); 
         
-    
-		
-        // Convert the String input into the byte array. 
-        //buf = inp.getBytes(); 
-  
-        // Step 2: Create the datagramPacket for sending the data. 
-        //DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
-  
         // Step 3: invoke the send call to actually send the data. 
-        //ds.send(DpSend); 
+        ds.send(DpSend); 
+ 
 
     } 
 	
