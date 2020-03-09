@@ -4,10 +4,17 @@ import java.net.DatagramSocket;
 
 public class ServerCM {
 
+	private int port;
+	
+	ServerCM(int cmPort) {
+		port = cmPort;
+	}
+	
+	// Receives an array of bytes from the ClientCM, converts the bytes to a String, and returns that String.
 	public String receive() throws IOException 
     { 
         // Step 1: Create a socket to listen at port 1234 
-        DatagramSocket ds = new DatagramSocket(1234); 
+        DatagramSocket ds = new DatagramSocket(port); 
         byte[] received = new byte[65535]; 
   
         DatagramPacket DpReceive = null; 
