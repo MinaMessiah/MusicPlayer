@@ -16,36 +16,29 @@ import com.google.gson.stream.JsonReader;
 
 public class ClientCM {
 
+	private InetAddress ip;
+	private int port;
+	
+	ClientCM(InetAddress ipAddr, int cmPort) {
+		ip = ipAddr;
+		port = cmPort;
+	}
+
 	public void send(String jsonRequest) throws IOException 
     { 
 		
         // Step 1: Create the socket object for carrying the data. 
         DatagramSocket ds = new DatagramSocket(); 
   
-        InetAddress ip = InetAddress.getLocalHost(); 
         byte buf[] = null; 
-  
-        //Gson gson = new Gson();
-        
-        //JsonObject json = j;
 
-        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
-        //String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
-
-        buf = jsonRequest.getBytes(); 
-        DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
-        ds.send(DpSend); 
-        
-    
-		
         // Convert the String input into the byte array. 
-        //buf = inp.getBytes(); 
-  
-        // Step 2: Create the datagramPacket for sending the data. 
-        //DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, 1234); 
-  
+        buf = jsonRequest.getBytes(); 
+        DatagramPacket DpSend = new DatagramPacket(buf, buf.length, ip, port); 
+        
         // Step 3: invoke the send call to actually send the data. 
-        //ds.send(DpSend); 
+        ds.send(DpSend); 
+ 
 
     } 
 	
