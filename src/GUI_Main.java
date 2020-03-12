@@ -471,7 +471,6 @@ public class GUI_Main {
 						JOptionPane.showMessageDialog(null, "Unexpected error!");
 				}
 			}
-
 		});
 
 		btnLogout.addActionListener(new ActionListener() {
@@ -483,12 +482,12 @@ public class GUI_Main {
 				player.stop();
 				GUI_Login.main(null);
 			}
-
 		});
 
 		btnGetSimilarSongs.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+//				ArrayList<Song> similarSongs = Proxy.execute("addPlaylistToUser", user.getGJson(), playlist)
 				ArrayList<Song> similarSongs = Song.getSimilarSongs(lastSelectedSong.getSimilarityId(), songs);
 				tableModel.updateTable(similarSongs);
 			}

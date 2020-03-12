@@ -4,6 +4,9 @@ public class Playlist {
 	private String name;
 	private ArrayList<Song> songs;
 
+	public Playlist() {
+	}
+	
 	public Playlist(String name) {
 		this.name = name;
 		this.songs = new ArrayList<Song>();
@@ -12,36 +15,41 @@ public class Playlist {
 	public static void addSongToPlaylist(Playlist playlist, Song song) {
 		playlist.songs.add(song);
 	}
-
-	public ArrayList<Song> getSongs() {
-		return songs;
+	
+	public static String testFun(String s) {
+		return "Method returned: " + s + s;
 	}
 
-	public String getPlaylistName() {
-		return this.name;
+	public static ArrayList<Song> getSongs(Playlist p) {
+		return p.songs;
 	}
 
-	public boolean addSongToPlaylist(Song song) {
-		if (this.songs == null)
-			this.songs = new ArrayList<Song>();
-		if (!this.songs.contains(song)) {
+	public static String getPlaylistName(Playlist p) {
+		return p.name;
+	}
+
+//	TODO rename method 
+	public static boolean addSongToPlaylist_(Playlist p, Song song) {
+		if (p.songs == null)
+			p.songs = new ArrayList<Song>();
+		if (!p.songs.contains(song)) {
 			System.out.println("Song added!");
-			this.songs.add(song);
+			p.songs.add(song);
 			return true;
 		} else
 			System.out.println("Song already exists!");
 		return false;
 	}
 
-	public void addSongToPlaylist(String songId) {
+	public static void addSongToPlaylist(Playlist p, String songId) {
 		Song song = Song.getSongById(songId);
-		addSongToPlaylist(song);
+		addSongToPlaylist_(p, song);
 	}
 	
 
-	public void addSongToPlaylist(String playlistName, Song song) {
-
-	}
+//	public void addSongToPlaylist(Song song) {
+//		this.songs.add(song);
+//	}
 
 	@Override
 	public boolean equals(Object obj) {

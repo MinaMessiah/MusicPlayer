@@ -35,7 +35,7 @@ public class User {
 
 	public Playlist getPlaylist(String playlistName) {
 		for (Playlist playlist : this.playlists)
-			if (playlistName.equals(playlist.getPlaylistName()))
+			if (playlistName.equals(Playlist.getPlaylistName(playlist)))
 				return playlist;
 		return null;
 	}
@@ -56,8 +56,8 @@ public class User {
 		if (this.playlists.contains(playlist)) {
 			for (Playlist p : this.playlists) {
 				if (p.equals(playlist)) {
-					for (Song song : playlist.getSongs())
-						p.addSongToPlaylist(song);
+					for (Song song : Playlist.getSongs(playlist))
+						Playlist.addSongToPlaylist(p, song);
 					break;
 				}
 			}

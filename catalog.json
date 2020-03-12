@@ -1,0 +1,18 @@
+[
+	   {
+      "remoteMethod":"playSong",
+      "className":"Song",
+      "args":{
+         "SongId":"String",
+		"name": "asdf"
+      }
+   }, 
+	{
+    "remoteMethod":"getSongChunk",
+    "objectName":"SongServices",
+    "args": {
+          "song": "Long",
+          "fragment": "int"
+      }
+	}
+]

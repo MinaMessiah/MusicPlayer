@@ -137,7 +137,7 @@ public class Song implements Runnable {
 	 */
 	public static void playSong(String songID) {
 		try {
-			InputStream is = new CECS327InputStream(songID);
+			InputStream is = new CECS327RemoteInputStream(songID);
 			Player mp3player = new Player(is);
 			mp3player.play();
 		} catch (JavaLayerException exception) {
@@ -165,7 +165,7 @@ public class Song implements Runnable {
 	public void run() {
 		try {
 //			InputStream is = new CECS327InputStream(this.getSongId() + ".mp3");
-			InputStream is = new CECS327InputStream("imperial.mp3");
+			InputStream is = new CECS327RemoteInputStream("imperial.mp3");
 			Player mp3player = new Player(is);
 			mp3player.play();
 		} catch (JavaLayerException exception) {
