@@ -5,30 +5,47 @@ public class User {
     private String username;
     private String password;
 
+    /**
+     * Default user constructor
+     */
     public User() {
         this.username = null;
         this.password = null;
     }
 
+    /**
+     * User constructor that takes in a name and password.
+     *
+     * @param username
+     * @param password
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.playlists = new ArrayList<Playlist>();
     }
 
-    
-//  ------------- START getters section -------------
-    public String getPassword() {
-        return this.password;
+    //  ------------- START getters section -------------
+    public static String getPassword(User u) {
+        return u.password;
     }
 
+
+    public static String getUsername(User u) {
+        return u.username;
+    }
+    
     public String getUsername() {
         return this.username;
     }
 
-    public Playlist getPlaylist(String playlistName) {
-        for (Playlist playlist : this.playlists)
-            if (playlistName.equals(playlist.getPlaylistName()))
+    public static ArrayList<Playlist> getPlaylists(User user) {
+        return user.playlists;
+    }
+
+    public static Playlist getPlaylist(User u, String playlistName) {
+        for (Playlist playlist : u.playlists)
+            if (playlistName.equals(Playlist.getPlaylistName(playlist)))
                 return playlist;
         return null;
     }
@@ -38,38 +55,77 @@ public class User {
     }
 
 //  ------------- END getters section -------------
-    
-    
+
+    public User login(String username, String password) {
+        ArrayList<User> users = JsonHelperMethods.readUsersJSON();
+
+        for (User u : users) {
+            if (User.getUsername(u).compareTo(username) == 0) {
+                if (BCrypt.checkpw(password, User.getPassword(u))) {
+                    return u;
+                }
+            }
+        }
+        System.out.println("User can't be found, printed from login in user class");
+        return null;
+    }
+
+    public Integer singup(String username, String password) {
+        ArrayList<User> users = JsonHelperMethods.readUsersJSON();
+
+        User u = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()));
+
+        if (!users.contains(u)) {
+            users.add(u);
+            JsonHelperMethods.writeUsersJSON(users);
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Adds a Playlist to the current user.
+     *
+     * @param playlist
+     */
     public void addPlaylist(Playlist playlist) {
         if (this.playlists == null)
             this.playlists = new ArrayList<Playlist>();
         if (this.playlists.contains(playlist)) {
-            System.out.println("Playlist exists already! Adding songs to old play list.");
             for (Playlist p : this.playlists) {
                 if (p.equals(playlist)) {
-                    for (Song song : playlist.getSongs())
-                        p.addSongToPlaylist(song);
+                    for (Song song : Playlist.getSongs(playlist))
+                        Playlist.addSongToPlaylist(p, song);
                     break;
                 }
             }
         } else {
-            System.out.println("Adding new playlist.");
             this.playlists.add(playlist);
         }
 
     }
 
+    /**
+     * Updates the user by loading the latest user data into the main user list.
+     */
+    public void updateUser() {
+        ArrayList<User> users = JsonHelperMethods.readUsersJSON();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equals(this)) {
+                users.set(i, this);
+                JsonHelperMethods.writeUsersJSON(users);
+                break;
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
+        if (obj instanceof User) {
+            User toCompare = (User) obj;
+            return this.username.toLowerCase().equals(toCompare.username.toLowerCase());
         }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-
-        User u = (User) obj;
-        return username.compareTo(u.getUsername()) == 0;
+        return false;
     }
 
     @Override
@@ -79,5 +135,8 @@ public class User {
         result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
-}
 
+    public String toString() {
+        return this.username + " " + this.password;
+    }
+}
